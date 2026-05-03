@@ -1,0 +1,68 @@
+---
+import { getArticles } from '../lib/microcms';
+
+let recentArticles: { id: string; title: string }[] = [];
+
+try {
+  const result = await getArticles(5);
+  recentArticles = result.contents.map(a => ({ id: a.id, title: a.title }));
+} catch {
+  // MicroCMSが未設定の場合はスキップ
+}
+
+const categories = [
+  { id: 'nenkin', name: '年金・社会保障' },
+  { id: 'setsuyaku', name: '節約・生活費' },
+  { id: 'toushi', name: '投資・資産運用' },
+  { id: 'hoken', name: '保険の見直し' },
+  { id: 'kurashi', name: 'ひとり暮らし' },
+];
+---
+
+<aside class="sidebar">
+
+  <!-- 広告スペース（AdSense取得後にコードを貼り付け） -->
+  <div class="ad-space">
+    <div class="ad-space-label">広告</div>
+    <!-- Google AdSense コードをここに -->
+    <p style="font-size:0.8rem;color:#bbb;">AdSense広告エリア</p>
+  </div>
+
+  <!-- 新着記事 -->
+  <div class="sidebar-widget">
+    <h3 class="sidebar-widget-title">新着記事</h3>
+    {recentArticles.length > 0 ? (
+      <ul class="sidebar-article-list">
+        {recentArticles.map(a => (
+          <li>
+            <a href={`/articles/${a.id}`}>{a.title}</a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p style="font-size:0.85rem;color:#999;">記事を投稿すると表示されます</p>
+    )}
+  </div>
+
+  <!-- カテゴリ -->
+  <div class="sidebar-widget">
+    <h3 class="sidebar-widget-title">カテゴリ</h3>
+    <ul class="category-list">
+      {categories.map(cat => (
+        <li>
+          <a href={`/categories/${cat.id}`}>{cat.name}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <!-- このブログについて -->
+  <div class="sidebar-widget">
+    <h3 class="sidebar-widget-title">このブログについて</h3>
+    <p style="font-size:0.85rem;line-height:1.7;color:#555;">
+      60歳・おひとりさま。老後のお金について、リアルな体験とともに発信しています。<br />
+      <a href="/about" style="font-size:0.82rem;">→ 詳しくはこちら</a>
+    </p>
+  </div>
+
+</aside>

@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+---
+
+<BaseLayout title="免責事項">
+  <div class="site-main">
+    <main>
+      <article class="article-layout">
+        <h1 style="font-size:1.4rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid var(--color-primary-light);">
+          免責事項
+        </h1>
+        <div class="article-content">
+          <p>
+            当ブログ（60歳おひとりさまの老後マネー術）に掲載している情報は、
+            管理人の個人的な経験・見解に基づくものであり、
+            特定の投資・金融商品・サービスを推奨するものではありません。
+          </p>
+          <p>
+            記事の内容は作成時点の情報です。制度の変更等により最新情報と異なる場合があります。
+            最終的な判断はご自身で行っていただくか、専門家（ファイナンシャルプランナー等）に
+            ご相談ください。
+          </p>
+          <p>
+            当ブログの情報を利用した結果生じた損害・損失について、
+            管理人は一切の責任を負いかねます。
+          </p>
+        </div>
+      </article>
+    </main>
+    <Sidebar />
+  </div>
+</BaseLayout>

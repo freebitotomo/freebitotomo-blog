@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+---
+
+<BaseLayout title="お問い合わせ">
+  <div class="site-main">
+    <main>
+      <article class="article-layout">
+        <h1 style="font-size:1.4rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid var(--color-primary-light);">
+          お問い合わせ
+        </h1>
+        <div class="article-content">
+          <p>
+            ご質問・ご意見・ご指摘などは、下記のフォームよりお送りください。<br />
+            ※ Google フォームを利用しています（Googleアカウント不要）
+          </p>
+
+          <!-- Google フォームのリンクを取得後、下記URLを差し替えてください -->
+          <p style="margin-top:1.5rem;">
+            <a
+              href="https://docs.google.com/forms/d/e/XXXXXX/viewform"
+              target="_blank"
+              rel="noopener"
+              style="display:inline-block;background:var(--color-primary);color:#fff;padding:0.8rem 1.5rem;border-radius:6px;text-decoration:none;font-weight:700;"
+            >
+              お問い合わせフォームを開く
+            </a>
+          </p>
+
+          <p style="font-size:0.85rem;color:#999;margin-top:1rem;">
+            ※ お返事まで数日かかる場合があります。<br />
+            ※ スパム・営業メールはお断りしています。
+          </p>
+        </div>
+      </article>
+    </main>
+    <Sidebar />
+  </div>
+</BaseLayout>

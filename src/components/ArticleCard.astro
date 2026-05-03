@@ -1,0 +1,41 @@
+---
+import type { Article } from '../lib/microcms';
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+}
+---
+
+<article class="article-card">
+  <a href={`/articles/${article.id}`} class="article-card-link">
+    {article.thumbnail ? (
+      <img
+        src={article.thumbnail.url}
+        alt={article.title}
+        class="article-thumbnail"
+        loading="lazy"
+      />
+    ) : (
+      <div class="article-thumbnail-placeholder">💴</div>
+    )}
+    <div class="article-card-body">
+      {article.category && (
+        <span class="article-category">{article.category.name}</span>
+      )}
+      <h2 class="article-title">{article.title}</h2>
+      {article.description && (
+        <p class="article-description">{article.description}</p>
+      )}
+      <time class="article-date" datetime={article.publishedAt}>
+        {formatDate(article.publishedAt)}
+      </time>
+    </div>
+  </a>
+</article>

@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import Sidebar from '../components/Sidebar.astro';
+import { getArticles } from '../lib/microcms';
+import type { Article } from '../lib/microcms';
+
+let articles: Article[] = [];
+let fetchError = false;
+
+try {
+  const result = await getArticles(10);
+  articles = result.contents;
+} catch {
+  fetchError = true;
+}
+---
+
+<BaseLayout>
+  <!-- ヒーロー（上部バナー） -->
+  <section class="hero">
+    <div class="hero-inner">
+      <h2>老後のお金、一緒に考えてみませんか？</h2>
+      <p>
+        年金・節約・投資・生活費…<br />
+        60歳おひとりさまのリアルな視点でお届けします。
+      </p>
+    </div>
+  </section>
+
+  <div class="site-main">
+    <main>
+      <!-- 広告（記事一覧上部） -->
+      <div class="ad-space">
+        <div class="ad-space-label">広告</div>
+        <!-- Google AdSense コードをここに -->
+        <p style="font-size:0.8rem;color:#bbb;">AdSense広告エリア</p>
+      </div>
+
+      <h2 class="section-title">最新記事</h2>
+
+      {fetchError && (
+        <div class="notice">
+          ⚙️ MicroCMSの設定がまだです。<code>.env</code>ファイルにAPIキーを設定してください。
+        </div>
+      )}
+
+      {articles.length === 0 && !fetchError && (
+        <div class="notice">
+          まだ記事がありません。MicroCMSから記事を投稿してください。
+        </div>
+      )}
+
+      {articles.map(article => (
+        <ArticleCard article={article} />
+      ))}
+    </main>
+
+    <Sidebar />
+  </div>
+</BaseLayout>

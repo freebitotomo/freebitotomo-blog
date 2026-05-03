@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+---
+
+<BaseLayout title="プライバシーポリシー">
+  <div class="site-main">
+    <main>
+      <article class="article-layout">
+        <h1 style="font-size:1.4rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid var(--color-primary-light);">
+          プライバシーポリシー
+        </h1>
+        <div class="article-content">
+          <h2>広告について</h2>
+          <p>
+            当ブログでは、Google AdSenseを利用しており、
+            GoogleはCookieを使用してユーザーの興味に応じた広告を表示することがあります。
+            Cookieを無効にする方法やGoogleアドセンスに関する詳細については、
+            <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">
+              Googleの広告ポリシー
+            </a>をご確認ください。
+          </p>
+
+          <h2>アクセス解析ツールについて</h2>
+          <p>
+            当ブログではアクセス解析のためGoogle Analyticsを使用することがあります。
+            このデータは匿名で収集されており、個人を特定するものではありません。
+          </p>
+
+          <h2>アフィリエイトについて</h2>
+          <p>
+            当ブログはアフィリエイト広告（Amazonアソシエイト等）を利用しています。
+            記事内のリンクから購入された場合、当ブログに一定の収益が発生することがあります。
+          </p>
+
+          <h2>免責事項</h2>
+          <p>
+            当ブログの情報は正確を期していますが、内容の完全性・正確性を保証するものではありません。
+            投資・保険・税金等の判断はご自身の責任のもと行ってください。
+          </p>
+        </div>
+      </article>
+    </main>
+    <Sidebar />
+  </div>
+</BaseLayout>

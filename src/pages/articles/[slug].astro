@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import { getArticles, getArticle } from '../../lib/microcms';
+import type { Article } from '../../lib/microcms';
+
+export async function getStaticPaths() {
+  try {
+    const { contents } = await getArticles(100);
+    return contents.map(article => ({
+      params: { slug: article.id },
+    }));
+  } catch {
+    return [];
+  }
+}
+
+const { slug } = Astro.params;
+let article: Article | null = null;
+
+try {
+  article = await getArticle(slug!);
+} catch {
+  return Astro.redirect('/404');
+}
+
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+}
+---
+
+<BaseLayout
+  title={article.title}
+  description={article.description || ''}
+  ogImage={article.thumbnail?.url}
+>
+  <div class="site-main">
+    <main>
+      <article class="article-layout">
+        <header class="article-header">
+          {article.category && (
+            <span class="article-category">{article.category.name}</span>
+          )}
+          <h1>{article.title}</h1>
+          <div class="article-meta">
+            <time datetime={article.publishedAt}>
+              {formatDate(article.publishedAt)}
+            </time>
+          </div>
+        </header>
+
+        {article.thumbnail && (
+          <img
+            src={article.thumbnail.url}
+            alt={article.title}
+            class="article-hero-image"
+          />
+        )}
+
+        <!-- 広告（記事冒頭） -->
+        <div class="ad-space">
+          <div class="ad-space-label">広告</div>
+          <!-- Google AdSense コードをここに -->
+          <p style="font-size:0.8rem;color:#bbb;">AdSense広告エリア</p>
+        </div>
+
+        <!-- 記事本文 -->
+        <div class="article-content" set:html={article.content} />
+
+        <!-- 広告（記事末尾） -->
+        <div class="ad-space">
+          <div class="ad-space-label">広告</div>
+          <!-- Google AdSense コードをここに -->
+          <p style="font-size:0.8rem;color:#bbb;">AdSense広告エリア</p>
+        </div>
+
+        <!-- アフィリエイトリンクボックス（例） -->
+        <!-- 記事に合わせてここにアフィリエイトコードを貼り付けます -->
+        <!--
+        <div class="affiliate-box">
+          <div class="affiliate-box-title">おすすめ商品・サービス</div>
+          アフィリエイトリンクをここに
+        </div>
+        -->
+
+        <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--color-border);">
+          <a href="/" style="font-size:0.9rem;">← 記事一覧に戻る</a>
+        </div>
+      </article>
+    </main>
+
+    <Sidebar />
+  </div>
+</BaseLayout>

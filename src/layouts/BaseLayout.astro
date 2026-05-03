@@ -1,0 +1,74 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = '60歳おひとりさまの老後マネー術',
+  description = '自由をつくる、お金と暮らしの話。年金・節約・投資・生活費など、60歳ひとり暮らしのリアルなお金事情を発信しています。',
+  ogImage = '/og-default.png',
+} = Astro.props;
+
+const siteName = '60歳おひとりさまの老後マネー術';
+const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+
+  <!-- OGP（SNSシェア時の表示） -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={`https://freebitotomo.com${ogImage}`} />
+  <meta property="og:site_name" content={siteName} />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <title>{fullTitle}</title>
+
+  <!-- Google AdSense（取得後にここに貼り付けます） -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div>
+        <a href="/" class="site-title">60歳おひとりさまの老後マネー術</a>
+        <div class="site-subtitle">自由をつくる、お金と暮らしの話</div>
+      </div>
+      <nav class="header-nav">
+        <a href="/">ホーム</a>
+        <a href="/about">このブログについて</a>
+      </nav>
+    </div>
+  </header>
+
+  <slot />
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <nav class="footer-nav">
+        <a href="/about">このブログについて</a>
+        <a href="/privacy">プライバシーポリシー</a>
+        <a href="/disclaimer">免責事項</a>
+        <a href="/contact">お問い合わせ</a>
+      </nav>
+      <p class="footer-copy">
+        &copy; {new Date().getFullYear()} 60歳おひとりさまの老後マネー術｜当サイトはアフィリエイト広告を利用しています。
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

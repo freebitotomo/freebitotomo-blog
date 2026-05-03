@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+---
+
+<BaseLayout
+  title="このブログについて"
+  description="60歳おひとりさまの老後マネー術の管理人プロフィールとブログの紹介です。"
+>
+  <div class="site-main">
+    <main>
+      <article class="article-layout">
+        <h1 style="font-size:1.5rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid var(--color-primary-light);">
+          このブログについて
+        </h1>
+
+        <div class="article-content">
+          <h2>はじめまして</h2>
+          <p>
+            このブログを読んでくださり、ありがとうございます。
+            「60歳おひとりさまの老後マネー術」の管理人です。
+          </p>
+
+          <h2>ブログを始めたきっかけ</h2>
+          <p>
+            60歳を過ぎ、老後のお金について真剣に向き合うようになりました。
+            年金はいくらもらえる？生活費はどう削る？貯蓄はいくら必要？
+            調べれば調べるほど不安になるけれど、少しずつ整理していくうちに
+            「同じ悩みを持つ方のお役に立てるかも」と思い、発信を始めました。
+          </p>
+
+          <h2>このブログで発信していること</h2>
+          <ul>
+            <li>年金・社会保障の基礎知識</li>
+            <li>ひとり暮らしの節約術・生活費の話</li>
+            <li>60代から始める投資・資産運用</li>
+            <li>保険の見直し</li>
+            <li>老後の生きがいと暮らし方</li>
+          </ul>
+
+          <h2>ご注意</h2>
+          <p>
+            当ブログの情報は個人の体験・調査に基づくものです。
+            投資・保険・税金などの最終判断はご自身でされるか、専門家にご相談ください。
+          </p>
+        </div>
+      </article>
+    </main>
+    <Sidebar />
+  </div>
+</BaseLayout>

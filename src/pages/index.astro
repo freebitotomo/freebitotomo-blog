@@ -10,7 +10,8 @@ let articles: Article[] = [];
 let fetchError = false;
 
 try {
-  const result = await getArticles(10);
+  const env = Astro.locals.runtime.env;
+  const result = await getArticles(env, 10);
   articles = result.contents;
 } catch {
   fetchError = true;

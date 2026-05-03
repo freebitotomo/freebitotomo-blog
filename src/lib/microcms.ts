@@ -1,13 +1,16 @@
 import { createClient } from 'microcms-js-sdk';
 
-const serviceDomain = import.meta.env.MICROCMS_SERVICE_DOMAIN;
-const apiKey = import.meta.env.MICROCMS_API_KEY;
+type MicroCMSEnv = {
+  MICROCMS_SERVICE_DOMAIN: string;
+  MICROCMS_API_KEY: string;
+};
 
-// APIキー未設定の場合はダミー値でクライアントを作成（実際のAPI呼び出しはtry/catchで処理）
-export const client = createClient({
-  serviceDomain: serviceDomain || 'placeholder',
-  apiKey: apiKey || 'placeholder',
-});
+function getClient(env: MicroCMSEnv) {
+  return createClient({
+    serviceDomain: env.MICROCMS_SERVICE_DOMAIN,
+    apiKey: env.MICROCMS_API_KEY,
+  });
+}
 
 export type Article = {
   id: string;
@@ -33,15 +36,15 @@ export type ArticleList = {
   limit: number;
 };
 
-export async function getArticles(limit = 10, offset = 0): Promise<ArticleList> {
-  return await client.get<ArticleList>({
+export async function getArticles(env: MicroCMSEnv, limit = 10, offset = 0): Promise<ArticleList> {
+  return await getClient(env).get<ArticleList>({
     endpoint: 'articles',
     queries: { limit, offset, orders: '-publishedAt' },
   });
 }
 
-export async function getArticle(slug: string): Promise<Article> {
-  return await client.get<Article>({
+export async function getArticle(env: MicroCMSEnv, slug: string): Promise<Article> {
+  return await getClient(env).get<Article>({
     endpoint: 'articles',
     contentId: slug,
   });

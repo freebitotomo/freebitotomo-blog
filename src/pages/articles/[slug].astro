@@ -9,7 +9,8 @@ const { slug } = Astro.params;
 let article: Article | null = null;
 
 try {
-  article = await getArticle(slug!);
+  const env = Astro.locals.runtime.env;
+  article = await getArticle(env, slug!);
 } catch {
   return Astro.redirect('/404');
 }

@@ -1,19 +1,9 @@
 ---
+export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Sidebar from '../../components/Sidebar.astro';
-import { getArticles, getArticle } from '../../lib/microcms';
+import { getArticle } from '../../lib/microcms';
 import type { Article } from '../../lib/microcms';
-
-export async function getStaticPaths() {
-  try {
-    const { contents } = await getArticles(100);
-    return contents.map(article => ({
-      params: { slug: article.id },
-    }));
-  } catch {
-    return [];
-  }
-}
 
 const { slug } = Astro.params;
 let article: Article | null = null;

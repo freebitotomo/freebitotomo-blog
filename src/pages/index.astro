@@ -8,13 +8,20 @@ import type { Article } from '../lib/microcms';
 
 let articles: Article[] = [];
 let fetchError = false;
+let debugInfo = '';
 
 try {
-  const env = Astro.locals.runtime.env;
-  const result = await getArticles(env, 10);
+  const runtime = Astro.locals?.runtime;
+  const env = runtime?.env as { MICROCMS_SERVICE_DOMAIN?: string; MICROCMS_API_KEY?: string } | undefined;
+  debugInfo = `runtime=${runtime ? 'OK' : 'undefined'}, env=${env ? 'OK' : 'undefined'}, domain=${env?.MICROCMS_SERVICE_DOMAIN ? 'set' : 'missing'}, key=${env?.MICROCMS_API_KEY ? 'set' : 'missing'}`;
+  if (!env || !env.MICROCMS_SERVICE_DOMAIN || !env.MICROCMS_API_KEY) {
+    throw new Error(`env vars missing: ${debugInfo}`);
+  }
+  const result = await getArticles(env as { MICROCMS_SERVICE_DOMAIN: string; MICROCMS_API_KEY: string }, 10);
   articles = result.contents;
-} catch {
+} catch (e: any) {
   fetchError = true;
+  debugInfo = `${debugInfo} | error: ${e?.message || String(e)}`;
 }
 ---
 
@@ -44,6 +51,7 @@ try {
       {fetchError && (
         <div class="notice">
           ⚙️ MicroCMSの設定がまだです。<code>.env</code>ファイルにAPIキーを設定してください。
+          <br /><small style="font-family:monospace;font-size:0.75rem;color:#666;">DEBUG: {debugInfo}</small>
         </div>
       )}
 

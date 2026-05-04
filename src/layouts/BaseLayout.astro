@@ -5,16 +5,21 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  ogType?: 'website' | 'article';
 }
 
 const {
   title = '60歳おひとりさまの老後マネー術',
   description = '自由をつくる、お金と暮らしの話。年金・節約・投資・生活費など、60歳ひとり暮らしのリアルなお金事情を発信しています。',
   ogImage = '/og-default.png',
+  ogType = 'website',
 } = Astro.props;
 
 const siteName = '60歳おひとりさまの老後マネー術';
 const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
+const siteOrigin = 'https://freebitotomo.com';
+const ogImageUrl = /^https?:\/\//.test(ogImage) ? ogImage : `${siteOrigin}${ogImage}`;
+const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).href;
 ---
 
 <!DOCTYPE html>
@@ -25,11 +30,14 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
   <meta name="description" content={description} />
 
   <!-- OGP（SNSシェア時の表示） -->
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content={ogType} />
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content={`https://freebitotomo.com${ogImage}`} />
+  <meta property="og:image" content={ogImageUrl} />
+  <meta property="og:url" content={canonicalUrl} />
   <meta property="og:site_name" content={siteName} />
+  <meta property="og:locale" content="ja_JP" />
+  <link rel="canonical" href={canonicalUrl} />
   <meta name="twitter:card" content="summary_large_image" />
 
   <title>{fullTitle}</title>

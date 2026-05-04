@@ -43,9 +43,10 @@ export async function getArticles(env: MicroCMSEnv, limit = 10, offset = 0): Pro
   });
 }
 
-export async function getArticle(env: MicroCMSEnv, slug: string): Promise<Article> {
+export async function getArticle(env: MicroCMSEnv, slug: string, draftKey?: string): Promise<Article> {
   return await getClient(env).get<Article>({
     endpoint: 'articles',
     contentId: slug,
+    queries: draftKey ? { draftKey } : {},
   });
 }

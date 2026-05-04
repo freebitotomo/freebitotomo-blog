@@ -6,11 +6,13 @@ import { getArticle } from '../../lib/microcms';
 import type { Article } from '../../lib/microcms';
 
 const { slug } = Astro.params;
+const draftKey = Astro.url.searchParams.get('draftKey') ?? undefined;
+const isPreview = Boolean(draftKey);
 let article: Article | null = null;
 
 try {
   const env = Astro.locals.runtime.env;
-  article = await getArticle(env, slug!);
+  article = await getArticle(env, slug!, draftKey);
 } catch {
   return Astro.redirect('/404');
 }
@@ -28,6 +30,11 @@ function formatDate(dateStr: string): string {
 >
   <div class="site-main">
     <main>
+      {isPreview && (
+        <div style="background:#fff8c5;border:1px solid #d4a72c;color:#7a5a00;padding:0.6rem 1rem;border-radius:6px;margin-bottom:1rem;font-size:0.9rem;">
+          👁️ プレビュー表示中（下書き記事）
+        </div>
+      )}
       <article class="article-layout">
         <header class="article-header">
           {article.category && (
